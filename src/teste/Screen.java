@@ -4,6 +4,8 @@
  */
 package teste;
 
+import java.awt.Color;
+
 /**
  *
  * @author pedro
@@ -15,6 +17,8 @@ public class Screen extends javax.swing.JFrame {
      */
     public Screen() {
         initComponents();
+        setLocationRelativeTo(null);
+        getContentPane().setBackground(Color.WHITE);
     }
 
     /**
@@ -32,11 +36,11 @@ public class Screen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 1000, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 563, Short.MAX_VALUE)
         );
 
         pack();
