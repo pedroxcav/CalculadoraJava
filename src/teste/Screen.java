@@ -28,7 +28,6 @@ public class Screen extends javax.swing.JFrame {
         Calculation = Calculation + number;
         CalculationField.setText(Calculation);
         last = number;
-        System.out.println(last);
     }
     public void PushOperator(String number){
         if (!(last == "÷" || last == "=" || last == "+" || last == "-" || last == "×")){
@@ -224,7 +223,7 @@ public class Screen extends javax.swing.JFrame {
         Clean.setBackground(new java.awt.Color(51, 51, 51));
         Clean.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         Clean.setForeground(new java.awt.Color(255, 255, 255));
-        Clean.setText("Clean");
+        Clean.setText("Clear");
         Clean.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CleanActionPerformed(evt);
