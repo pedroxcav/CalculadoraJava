@@ -12,7 +12,8 @@ import java.awt.Color;
  */
 public class Screen extends javax.swing.JFrame {
     String Calculation = "";
-    String last = "";
+    String last1 = "";
+    String last2 = "";
     /**
      * Creates new form Screen
      */
@@ -36,11 +37,13 @@ public class Screen extends javax.swing.JFrame {
     }
     
     public boolean Push2 (String value) {
-        if(!((last.equals("-") || last.endsWith(",")) && (value.equals("+") || value.equals("-") || value.equals("÷") || value.equals("×") || value.equals(",")))){
+        if(!(((last1.equals("-") || last1.endsWith(",")) && (value.equals("+") || value.equals("-") || value.equals("÷") || value.equals("×") || value.equals(","))) || (last2.equals(",") && value.equals(",")))){
+            if (value.equals("÷") || value.equals("=") || value.equals("+") || value.equals("×") || value.equals(",")){
+                last2 = value;
+            }
             Calculation = Calculation + value;
             CalculationField.setText(Calculation);
-            last = value;
-            System.out.println(last);
+            last1 = value;
             return true;
         }
         return false;
@@ -48,20 +51,24 @@ public class Screen extends javax.swing.JFrame {
     
     public boolean Push1(String value){
         String cal = CalculationField.getText();
-        if (!(last.equals("÷") || last.equals("=") || last.equals("+") || last.equals("×") || last.equals(",") || cal.equals(" 0"))){
+        if (!(last1.equals("÷") || last1.equals("=") || last1.equals("+") || last1.equals("×") || last1.equals(",") || cal.equals(" 0"))){
             return this.Push2(value);
         } else if (cal.equals(" 0") && value.equals(",")){
             this.Push2("0");
             this.Push2(",");
+            return true;
         } else if (cal.equals(" 0") && value.equals("+")){
             this.Push2("0");
             this.Push2("+");
+            return true;
         } else if (cal.equals(" 0") && value.equals("÷")){
             this.Push2("0");
             this.Push2("÷");
+            return true;
         } else if (cal.equals(" 0") && value.equals("×")){
             this.Push2("0");
             this.Push2("×");
+            return true;
         }
         return false;
     }
@@ -459,7 +466,8 @@ public class Screen extends javax.swing.JFrame {
         // TODO add your handling code here:
         CalculationField.setText(" 0");
         Calculation = "";
-        last = "";
+        last1 = "";
+        last2 = "";
         this.Colors();
     }//GEN-LAST:event_CleanActionPerformed
 
