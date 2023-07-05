@@ -11,9 +11,12 @@ import java.awt.Color;
  * @author pedro
  */
 public class Screen extends javax.swing.JFrame {
-    String Calculation = "";
     String last1 = "";
     String last2 = "";
+    double number1;
+    double number2;
+    String operator;
+    double result;
     /**
      * Creates new form Screen
      */
@@ -23,6 +26,27 @@ public class Screen extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.BLACK);
         CalculationField.setText(" 0");
+    }
+    
+    public void Execute(){
+        switch (operator) {
+            case "Plus":
+                result = number1 + number2;
+                break;
+            case "Minus":
+                result = number1 - number2;
+                break;
+            case "Times":
+                result = number1 * number2;
+                break;
+            case "Divided":
+                result = number1 / number2;
+                break;
+            default:
+                System.out.println("default");
+        }
+        CalculationField.setText(Double.toString(result));
+        System.out.println("Resultado: "+result);
     }
     
     public void Colors(){
@@ -36,41 +60,22 @@ public class Screen extends javax.swing.JFrame {
         Times.setForeground(Color.WHITE);
     }
     
-    public boolean Push2 (String value) {
-        if(!(((last1.equals("-") || last1.endsWith(",")) && (value.equals("+") || value.equals("-") || value.equals("÷") || value.equals("×") || value.equals(","))) || (last2.equals(",") && value.equals(",")))){
-            if (value.equals("÷") || value.equals("=") || value.equals("+") || value.equals("×") || value.equals(",")){
-                last2 = value;
+    public boolean Push (String value) {
+        if ( (last1.equals("+")||last1.equals("-")||last1.equals("×")||last1.equals("÷")||last1.equals(".")) && (value.equals("+")||value.equals("-")||value.equals("×")||value.equals("÷")||value.equals(".")) || (last2.equals(".") && value.equals(".")) ) {
+            return false;
+        } else {
+            if (CalculationField.getText().equals(" 0")||last1.equals("+")||last1.equals("-")||last1.equals("×")||last1.equals("÷")) CalculationField.setText("");
+            if (value.equals("+")||value.equals("-")||value.equals("×")||value.equals("÷")) {
+                number1 = Double.parseDouble(CalculationField.getText());
+                System.out.println("Primeiro valor: "+number1);
+            } else {
+                CalculationField.setText(CalculationField.getText()+value);
             }
-            Calculation = Calculation + value;
-            CalculationField.setText(Calculation);
             last1 = value;
+            if(value.equals(".")) last2 = value;
+            System.out.println("Last: "+last1);
             return true;
         }
-        return false;
-    }
-    
-    public boolean Push1(String value){
-        String cal = CalculationField.getText();
-        if (!(last1.equals("÷") || last1.equals("=") || last1.equals("+") || last1.equals("×") || last1.equals(",") || cal.equals(" 0"))){
-            return this.Push2(value);
-        } else if (cal.equals(" 0") && value.equals(",")){
-            this.Push2("0");
-            this.Push2(",");
-            return true;
-        } else if (cal.equals(" 0") && value.equals("+")){
-            this.Push2("0");
-            this.Push2("+");
-            return true;
-        } else if (cal.equals(" 0") && value.equals("÷")){
-            this.Push2("0");
-            this.Push2("÷");
-            return true;
-        } else if (cal.equals(" 0") && value.equals("×")){
-            this.Push2("0");
-            this.Push2("×");
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -387,117 +392,117 @@ public class Screen extends javax.swing.JFrame {
 
     private void NineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NineActionPerformed
         // TODO add your handling code here:
-        this.Push2("9");
+        this.Push("9");
         this.Colors();
     }//GEN-LAST:event_NineActionPerformed
 
     private void SixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SixActionPerformed
         // TODO add your handling code here:
-        this.Push2("6");
+        this.Push("6");
         this.Colors();
     }//GEN-LAST:event_SixActionPerformed
 
     private void ThreeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ThreeActionPerformed
-        // TODO add your handling code here: 
-        this.Push2("3");
+        // TODO add your handling code here:
+        this.Push("3");
         this.Colors();
     }//GEN-LAST:event_ThreeActionPerformed
 
     private void DividedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DividedActionPerformed
         // TODO add your handling code here:
-        if (this.Push1("÷")){
-            Divided.setBackground(Color.WHITE);
+        if (this.Push("÷")) {
+            Divided.setBackground(Color.white);
             Divided.setForeground(new Color(255,125,0));
+            operator = "Divided";
         }
     }//GEN-LAST:event_DividedActionPerformed
 
     private void TimesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimesActionPerformed
         // TODO add your handling code here:
-        if (this.Push1("×")) {
-            Times.setBackground(Color.WHITE);
+        if (this.Push("×")) {
+            Times.setBackground(Color.white);
             Times.setForeground(new Color(255,125,0));
+            operator = "Times";
         }
     }//GEN-LAST:event_TimesActionPerformed
 
     private void MinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MinusActionPerformed
         // TODO add your handling code here:
-        if (this.Push2("-")){
-            Divided.setBackground(new Color(255,125,0));
-            Divided.setForeground(Color.WHITE);
-            Plus.setBackground(new Color(255,125,0));
-            Plus.setForeground(Color.WHITE);
-            Minus.setBackground(Color.WHITE);
+        if (this.Push("-")) {
+            Minus.setBackground(Color.white);
             Minus.setForeground(new Color(255,125,0));
-            Times.setBackground(new Color(255,125,0));
-            Times.setForeground(Color.WHITE);
+            operator = "Minus";
         }
     }//GEN-LAST:event_MinusActionPerformed
 
     private void PlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlusActionPerformed
         // TODO add your handling code here:
-        if (this.Push1("+")){
-            Plus.setBackground(Color.WHITE);
+        if (this.Push("+")) {
+            Plus.setBackground(Color.white);
             Plus.setForeground(new Color(255,125,0));
+            operator = "Plus";
         }
     }//GEN-LAST:event_PlusActionPerformed
 
     private void TwoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TwoActionPerformed
         // TODO add your handling code here:
-        this.Push2("2");
+        this.Push("2");
         this.Colors();
     }//GEN-LAST:event_TwoActionPerformed
 
     private void PointActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PointActionPerformed
         // TODO add your handling code here:
-        this.Push1(",");
+        if (this.Push("."))this.Colors();
     }//GEN-LAST:event_PointActionPerformed
 
     private void SevenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SevenActionPerformed
         // TODO add your handling code here:
-        this.Push2("7");
+        this.Push("7");
         this.Colors();
     }//GEN-LAST:event_SevenActionPerformed
 
     private void EqualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EqualsActionPerformed
         // TODO add your handling code here:
+        number2 = Double.parseDouble(CalculationField.getText());
+        System.out.println("Segundo valor: "+number2);
+        this.Execute();
     }//GEN-LAST:event_EqualsActionPerformed
 
     private void CleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanActionPerformed
         // TODO add your handling code here:
         CalculationField.setText(" 0");
-        Calculation = "";
-        last1 = "";
-        last2 = "";
+        String last1 = "";
         this.Colors();
+        System.out.println("- Clear -");
     }//GEN-LAST:event_CleanActionPerformed
 
     private void EightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EightActionPerformed
         // TODO add your handling code here:
-        this.Push2("8");
+        this.Push("8");
         this.Colors();
     }//GEN-LAST:event_EightActionPerformed
 
     private void OneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OneActionPerformed
         // TODO add your handling code here:
-        this.Push2("1");
+        this.Push("1");
         this.Colors();
     }//GEN-LAST:event_OneActionPerformed
 
     private void ForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForActionPerformed
         // TODO add your handling code here:
-        this.Push2("4");
+        this.Push("4");
         this.Colors();
     }//GEN-LAST:event_ForActionPerformed
 
     private void ZeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ZeroActionPerformed
         // TODO add your handling code here:
-        this.Push2("0");
+        this.Push("0");
         this.Colors();
     }//GEN-LAST:event_ZeroActionPerformed
 
     private void FiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FiveActionPerformed
         // TODO add your handling code here:
-        this.Push2("5");
+        this.Push("5");
         this.Colors();
     }//GEN-LAST:event_FiveActionPerformed
 
