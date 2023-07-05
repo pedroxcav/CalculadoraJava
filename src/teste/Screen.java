@@ -15,7 +15,7 @@ public class Screen extends javax.swing.JFrame {
     String last2 = "";
     double number1;
     double number2;
-    String operator;
+    String operator = "";
     double result;
     /**
      * Creates new form Screen
@@ -66,9 +66,11 @@ public class Screen extends javax.swing.JFrame {
         } else {
             if (CalculationField.getText().equals(" 0")||last1.equals("+")||last1.equals("-")||last1.equals("×")||last1.equals("÷")) CalculationField.setText("");
             if (value.equals("+")||value.equals("-")||value.equals("×")||value.equals("÷")) {
+                if(CalculationField.getText().equals("")) this.Push("0");
                 number1 = Double.parseDouble(CalculationField.getText());
                 System.out.println("Primeiro valor: "+number1);
             } else {
+                if (CalculationField.getText().equals(Double.toString(result))) CalculationField.setText("");
                 CalculationField.setText(CalculationField.getText()+value);
             }
             last1 = value;
@@ -103,7 +105,7 @@ public class Screen extends javax.swing.JFrame {
         Plus = new javax.swing.JButton();
         Point = new javax.swing.JButton();
         Zero = new javax.swing.JButton();
-        Clean = new javax.swing.JButton();
+        Clear = new javax.swing.JButton();
         Equals = new javax.swing.JButton();
         CalculationField = new javax.swing.JTextField();
 
@@ -261,13 +263,13 @@ public class Screen extends javax.swing.JFrame {
             }
         });
 
-        Clean.setBackground(new java.awt.Color(51, 51, 51));
-        Clean.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        Clean.setForeground(new java.awt.Color(255, 255, 255));
-        Clean.setText("Clear");
-        Clean.addActionListener(new java.awt.event.ActionListener() {
+        Clear.setBackground(new java.awt.Color(51, 51, 51));
+        Clear.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        Clear.setForeground(new java.awt.Color(255, 255, 255));
+        Clear.setText("Clear");
+        Clear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CleanActionPerformed(evt);
+                ClearActionPerformed(evt);
             }
         });
 
@@ -326,7 +328,7 @@ public class Screen extends javax.swing.JFrame {
                                         .addComponent(Zero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(Point, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(Clean, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(Clear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(CalculadoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Divided, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -371,7 +373,7 @@ public class Screen extends javax.swing.JFrame {
                             .addComponent(Zero, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CalculadoraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(Clean, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Clear, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Equals, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
@@ -380,11 +382,14 @@ public class Screen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(Calculadora, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -463,18 +468,27 @@ public class Screen extends javax.swing.JFrame {
 
     private void EqualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EqualsActionPerformed
         // TODO add your handling code here:
-        number2 = Double.parseDouble(CalculationField.getText());
-        System.out.println("Segundo valor: "+number2);
-        this.Execute();
+        if ( !(Double.toString(number1) == null || Double.toString(number2) == null || operator.equals("")) ) {
+            number2 = Double.parseDouble(CalculationField.getText());
+            System.out.println("Segundo valor: "+number2);
+            this.Execute();
+            this.Colors();
+            operator = "";
+        }
     }//GEN-LAST:event_EqualsActionPerformed
 
-    private void CleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CleanActionPerformed
+    private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
         // TODO add your handling code here:
         CalculationField.setText(" 0");
         String last1 = "";
+        last2 = "";
+        number1 = 0;
+        number2 = 0;
+        operator = "";
+        result = 0;
         this.Colors();
         System.out.println("- Clear -");
-    }//GEN-LAST:event_CleanActionPerformed
+    }//GEN-LAST:event_ClearActionPerformed
 
     private void EightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EightActionPerformed
         // TODO add your handling code here:
@@ -544,7 +558,7 @@ public class Screen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Calculadora;
     private javax.swing.JTextField CalculationField;
-    private javax.swing.JButton Clean;
+    private javax.swing.JButton Clear;
     private javax.swing.JButton Divided;
     private javax.swing.JButton Eight;
     private javax.swing.JButton Equals;
