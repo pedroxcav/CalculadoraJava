@@ -503,7 +503,7 @@ public class Screen extends javax.swing.JFrame {
 
     private void EqualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EqualsActionPerformed
         // TODO add your handling code here:
-        if ( !(Double.toString(number1) == null || Double.toString(number2) == null || operator.equals("")) ) {
+        if (!operator.equals("")) {
             number2 = Double.parseDouble(CalculationField.getText());
             System.out.println("Segundo valor: "+number2);
             this.Execute();
@@ -515,7 +515,7 @@ public class Screen extends javax.swing.JFrame {
     private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
         // TODO add your handling code here:
         CalculationField.setText(" 0");
-        String last1 = "";
+        last1 = "";
         last2 = "";
         number1 = 0;
         number2 = 0;
