@@ -16,13 +16,14 @@ import java.util.Locale;
 public class Screen extends javax.swing.JFrame {
     String last1 = "";
     String last2 = "";
-    double number1;
+    double number1 = -1;
     double number2;
     String operator = "";
     double result;
+    int sequencial = 0;
     DecimalFormat df;
     DecimalFormatSymbols dfs = new DecimalFormatSymbols();
-    String padrao = "#.##";
+    String padrao = "#.###";
         
     /**
      * Creates new form Screen
@@ -82,6 +83,11 @@ public class Screen extends javax.swing.JFrame {
             if (CalculationField.getText().equals(" 0")||last1.equals("+")||last1.equals("-")||last1.equals("×")||last1.equals("÷")) CalculationField.setText("");
             if (value.equals("+")||value.equals("-")||value.equals("×")||value.equals("÷")) {
                 if(CalculationField.getText().equals("")) this.Push("0");
+                sequencial++;
+                if (sequencial >= 2){
+                    this.Execute();
+                }
+                System.out.println("Sequencial: "+sequencial);
                 number1 = Double.parseDouble(CalculationField.getText());
                 System.out.println("Primeiro valor: "+number1);
             } else {
@@ -89,8 +95,8 @@ public class Screen extends javax.swing.JFrame {
                 CalculationField.setText(CalculationField.getText()+value);
             }
             last1 = value;
-            if(value.equals(".") || value.equals("+")||value.equals("-")||value.equals("×")||value.equals("÷")) last2 = value;
             System.out.println("Last: "+last1);
+            if(value.equals(".") || value.equals("+")||value.equals("-")||value.equals("×")||value.equals("÷")) last2 = value;
             return true;
         }
     }
@@ -509,6 +515,8 @@ public class Screen extends javax.swing.JFrame {
     private void EqualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EqualsActionPerformed
         // TODO add your handling code here:
         this.Execute();
+        sequencial = 0;
+        
     }//GEN-LAST:event_EqualsActionPerformed
 
     private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
@@ -516,10 +524,11 @@ public class Screen extends javax.swing.JFrame {
         CalculationField.setText(" 0");
         last1 = "";
         last2 = "";
-        number1 = 0;
+        number1 = -1;
         number2 = 0;
         operator = "";
         result = 0;
+        sequencial = 0;
         this.Colors();
         System.out.println("- Clear -");
     }//GEN-LAST:event_ClearActionPerformed
@@ -567,7 +576,12 @@ public class Screen extends javax.swing.JFrame {
         // TODO add your handling code here:
         String value = CalculationField.getText();
         if (!value.equals(" 0")){
-            CalculationField.setText(Double.toString(Double.parseDouble(value)/100));
+            if (number1 == -1){
+                CalculationField.setText(Double.toString(Double.parseDouble(value)/100));
+            } else {
+                double percent = Double.parseDouble(value)/100;
+                CalculationField.setText(Double.toString(percent*number1));
+            }
             last1 = "%";
         }
     }//GEN-LAST:event_PercentActionPerformed
