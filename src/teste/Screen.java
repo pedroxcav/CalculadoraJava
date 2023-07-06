@@ -38,25 +38,30 @@ public class Screen extends javax.swing.JFrame {
     }
     
     public void Execute(){
-        switch (operator) {
-            case "Plus":
-                result = number1 + number2;
-                break;
-            case "Minus":
-                result = number1 - number2;
-                break;
-            case "Times":
-                result = number1 * number2;
-                break;
-            case "Divided":
-                result = number1 / number2;
-                break;
-            default:
-                System.out.println("default");
+        if (!operator.equals("")) {
+            number2 = Double.parseDouble(CalculationField.getText());
+            System.out.println("Segundo valor: "+number2);
+            switch (operator) {
+                case "Plus":
+                    result = number1 + number2;
+                    break;
+                case "Minus":
+                    result = number1 - number2;
+                    break;
+                case "Times":
+                    result = number1 * number2;
+                    break;
+                case "Divided":
+                    result = number1 / number2;
+                    break;
+                default:
+                    System.out.println("default");
+            }
+            CalculationField.setText(df.format(result));
+            System.out.println("Resultado: "+df.format(result));
+            this.Colors();
+            last1 = "";
         }
-        
-        CalculationField.setText(df.format(result));
-        System.out.println("Resultado: "+df.format(result));
     }
     
     public void Colors(){
@@ -503,13 +508,7 @@ public class Screen extends javax.swing.JFrame {
 
     private void EqualsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EqualsActionPerformed
         // TODO add your handling code here:
-        if (!operator.equals("")) {
-            number2 = Double.parseDouble(CalculationField.getText());
-            System.out.println("Segundo valor: "+number2);
-            this.Execute();
-            this.Colors();
-            operator = "";
-        }
+        this.Execute();
     }//GEN-LAST:event_EqualsActionPerformed
 
     private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
