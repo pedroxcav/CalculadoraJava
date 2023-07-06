@@ -5,6 +5,9 @@
 package teste;
 
 import java.awt.Color;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 /**
  *
@@ -17,6 +20,10 @@ public class Screen extends javax.swing.JFrame {
     double number2;
     String operator = "";
     double result;
+    DecimalFormat df;
+    DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+    String padrao = "#.##";
+        
     /**
      * Creates new form Screen
      */
@@ -26,6 +33,8 @@ public class Screen extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         getContentPane().setBackground(Color.BLACK);
         CalculationField.setText(" 0");
+        dfs.setDecimalSeparator('.');
+        df = new DecimalFormat(padrao, dfs);
     }
     
     public void Execute(){
@@ -45,8 +54,9 @@ public class Screen extends javax.swing.JFrame {
             default:
                 System.out.println("default");
         }
-        CalculationField.setText(Double.toString(result));
-        System.out.println("Resultado: "+result);
+        
+        CalculationField.setText(df.format(result));
+        System.out.println("Resultado: "+df.format(result));
     }
     
     public void Colors(){
@@ -70,11 +80,11 @@ public class Screen extends javax.swing.JFrame {
                 number1 = Double.parseDouble(CalculationField.getText());
                 System.out.println("Primeiro valor: "+number1);
             } else {
-                if (CalculationField.getText().equals(Double.toString(result))) CalculationField.setText("");
+                if (CalculationField.getText().equals(df.format(result))) CalculationField.setText("");
                 CalculationField.setText(CalculationField.getText()+value);
             }
             last1 = value;
-            if(value.equals(".")) last2 = value;
+            if(value.equals(".") || value.equals("+")||value.equals("-")||value.equals("×")||value.equals("÷")) last2 = value;
             System.out.println("Last: "+last1);
             return true;
         }
@@ -382,10 +392,7 @@ public class Screen extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(Calculadora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
