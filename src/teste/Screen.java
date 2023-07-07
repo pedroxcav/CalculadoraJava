@@ -41,7 +41,6 @@ public class Screen extends javax.swing.JFrame {
     public void Execute(){
         if (!operator.equals("")) {
             number2 = Double.parseDouble(CalculationField.getText());
-            System.out.println("Segundo valor: "+number2);
             switch (operator) {
                 case "Plus":
                     result = number1 + number2;
@@ -59,7 +58,6 @@ public class Screen extends javax.swing.JFrame {
                     System.out.println("default");
             }
             CalculationField.setText(df.format(result));
-            System.out.println("Resultado: "+df.format(result));
             this.Colors();
             last1 = "";
         }
@@ -87,16 +85,13 @@ public class Screen extends javax.swing.JFrame {
                 if (sequencial >= 2){
                     this.Execute();
                 }
-                System.out.println("Sequencial: "+sequencial);
                 number1 = Double.parseDouble(CalculationField.getText());
-                System.out.println("Primeiro valor: "+number1);
             } else {
                 if (CalculationField.getText().equals(df.format(result)) || last1.equals("%")) CalculationField.setText("");
                 CalculationField.setText(CalculationField.getText()+value);
             }
             last1 = value;
-            System.out.println("Last: "+last1);
-            if(value.equals(".") || value.equals("+")||value.equals("-")||value.equals("×")||value.equals("÷")) last2 = value;
+            if(value.equals(".")||value.equals("+")||value.equals("-")||value.equals("×")||value.equals("÷")) last2 = value;
             return true;
         }
     }
@@ -516,7 +511,6 @@ public class Screen extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.Execute();
         sequencial = 0;
-        
     }//GEN-LAST:event_EqualsActionPerformed
 
     private void ClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearActionPerformed
@@ -530,7 +524,6 @@ public class Screen extends javax.swing.JFrame {
         result = 0;
         sequencial = 0;
         this.Colors();
-        System.out.println("- Clear -");
     }//GEN-LAST:event_ClearActionPerformed
 
     private void EightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EightActionPerformed
